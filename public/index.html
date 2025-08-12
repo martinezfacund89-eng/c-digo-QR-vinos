@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Leyes del vino</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;max-width:800px;margin:36px auto;padding:0 16px}
+    input,select{padding:8px;font-size:16px;margin-right:8px}
+    .card{border:1px solid #ddd;padding:16px;border-radius:8px;margin-top:16px}
+  </style>
+</head>
+<body>
+  <h1>Buscar leyes del vino</h1>
+  <p>Ingresa tu país:</p>
+  <input id="q" placeholder="Escribe o selecciona un país" list="countries" />
+  <datalist id="countries"></datalist>
+  <button id="buscar">Buscar</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    const API_BASE = '/api'; // si lo deployás con backend en mismo dominio. Si no, pon URL completa.
+
+    async function cargarPaises() {
+      try {
+        const res = await fetch(API_BASE + '/countries');
+        const data = await res.json();
+        const dl = document.getElementById('countries');
+        dl.innerHTML = '';
+        data.forEach(c => {
+          const opt = document.createElement('option');
+          opt.value = c;
+          dl.appendChild(opt);
+        });
+      } catch(err){
+        console.error(err);
+      }
+    }
+
+    async function buscar() {
+      const q = document.getElementById('q').value.trim();
+      if (!q) return alert('Ingresa un país');
+      document.getElementById('resultado').innerHTML = '<div class="card">Cargando...</div>';
+      try {
+        const res = await fetch(API_BASE + '/laws?country=' + encodeURIComponent(q));
+        if (res.status === 404) {
+          document.getElementById('resultado').innerHTML = '<div class="card">No hay leyes cargadas para ese país.</div>';
+          return;
+        }
+        const data = await res.json();
+        document.getElementById('resultado').innerHTML = `
+          <div class="card">
+            <h3>${data.country}</h3>
+            <p>${data.text.replace(/\n/g,'<br>')}</p>
+            <small>Última actualización: ${data.updated || 'desconocida'}</small>
+          </div>`;
+      } catch (err) {
+        document.getElementById('resultado').innerHTML = '<div class="card">Error al obtener datos.</div>';
+        console.error(err);
+      }
+    }
+
+    document.getElementById('buscar').addEventListener('click', buscar);
+    window.addEventListener('load', cargarPaises);
+  </script>
+</body>
+</html>
