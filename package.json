@@ -1,0 +1,21 @@
+{
+  "name": "qr-dinamico",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/martinezfacund89-eng/c-digo-QR-vinos.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/martinezfacund89-eng/c-digo-QR-vinos/issues"
+  },
+  "homepage": "https://github.com/martinezfacund89-eng/c-digo-QR-vinos#readme"
+}
