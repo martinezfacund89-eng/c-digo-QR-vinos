@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/martinezfacund89-eng/c-digo-QR-vinos/issues"
   },
-  "homepage": "https://github.com/martinezfacund89-eng/c-digo-QR-vinos#readme"
+  "homepage": "https://github.com/martinezfacund89-eng/c-digo-QR-vinos#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
